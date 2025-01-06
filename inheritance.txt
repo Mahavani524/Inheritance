@@ -1,0 +1,144 @@
+import java.util.ArrayList;
+import java.util.List;
+class Student {
+    String name;
+    int age;
+
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    void display() {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
+}
+
+
+class UndergraduateStudent extends Student {
+    String major;
+
+    UndergraduateStudent(String name, int age, String major) {
+        super(name, age);
+        this.major = major;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Major: " + major);
+    }
+}
+
+class Freshman extends UndergraduateStudent {
+    String advisor;
+
+    Freshman(String name, int age, String major, String advisor) {
+        super(name, age, major);
+        this.advisor = advisor;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Advisor: " + advisor);
+    }
+}
+
+
+class GraduateStudent extends Student {
+    String thesisTopic;
+
+    GraduateStudent(String name, int age, String thesisTopic) {
+        super(name, age);
+        this.thesisTopic = thesisTopic;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Thesis Topic: " + thesisTopic);
+    }
+}
+
+interface PartTimeJob {
+    void work();
+}
+
+interface Sports {
+    void playSport();
+}
+
+class WorkingStudent extends GraduateStudent implements PartTimeJob, Sports {
+    String jobTitle;
+
+    WorkingStudent(String name, int age, String thesisTopic, String jobTitle) {
+        super(name, age, thesisTopic);
+        this.jobTitle = jobTitle;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Job Title: " + jobTitle);
+    }
+
+    public void work() {
+        System.out.println(name + " works as a " + jobTitle);
+    }
+
+    public void playSport() {
+        System.out.println(name + " plays a sport.");
+    }
+
+class HybridStudent extends GraduateStudent implements PartTimeJob {
+    String project;
+
+    HybridStudent(String name, int age, String thesisTopic, String project) {
+        super(name, age, thesisTopic);
+        this.project = project;
+    }
+
+    void display() {
+        super.display();
+        System.out.println("Project: " + project);
+    }
+
+    public void work() {
+        System.out.println(name + " works on the project: " + project);
+    }
+}
+
+public class StudentListDemo {
+    public static void main(String[] args) {
+        List<Student> studentList = new ArrayList<>();
+
+        
+        UndergraduateStudent ugStudent = new UndergraduateStudent("Alice", 20, "Computer Science");
+        studentList.add(ugStudent);
+
+       
+        Freshman freshman = new Freshman("Bob", 18, "Mechanical Engineering", "Dr. Smith");
+        studentList.add(freshman);
+
+        
+        GraduateStudent gradStudent = new GraduateStudent("Charlie", 25, "Quantum Computing");
+        studentList.add(gradStudent);
+
+        
+        WorkingStudent workingStudent = new WorkingStudent("David", 24, "AI Research", "Software Developer");
+        studentList.add(workingStudent);
+
+        
+        HybridStudent hybridStudent = new HybridStudent("Eve", 26, "Cybersecurity", "Blockchain Security");
+        studentList.add(hybridStudent);
+
+      
+        for (Student student : studentList) {
+            student.display();
+            if (student instanceof PartTimeJob) {
+                ((PartTimeJob) student).work();
+            }
+            if (student instanceof Sports) {
+                ((Sports) student).playSport();
+            }
+            System.out.println();
+        }
+    }
+}
